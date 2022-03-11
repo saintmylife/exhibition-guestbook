@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Modules\Permission\Repository\PermissionRepositoryInterface;
+use App\Modules\Role\Repository\RoleRepositoryInterface;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
-use Spatie\Permission\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -14,25 +14,29 @@ class PermissionsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(PermissionRepositoryInterface $repo, RoleRepositoryInterface $roleRepo)
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
             'user-access',
-            'role-access',
-            'read-sites',
-            'create-sites',
-            'edit-sites',
-            'delete-sites',
+            'read-events',
+            'read-guests',
+            'export-guests',
+            'read-presences',
+            'scan-presences',
+            'read-doorprizes',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            $repo->create(['name' => $permission]);
         }
 
-        $role = Role::find(1);
-        $role->syncPermissions($permissions);
+        $organizer = $roleRepo->find(2);
+        $organizer->syncPermissions(array_diff($permissions, ['scan-presences']));
+
+        $operator = $roleRepo->find(3);
+        $operator->syncPermissions(array_diff($permissions, ['user-access', 'export-guests']));
     }
 }

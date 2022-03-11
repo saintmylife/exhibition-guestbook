@@ -42,6 +42,9 @@ class RouteServiceProvider extends ServiceProvider
             $this->mapWebRoutes();
             $this->mapApiRoutes();
         });
+        Route::fallback(function () {
+            return response()->json(['message' => 'Route Not Found'], 404);
+        });
     }
     /**
      * Configure the rate limiters for the application.

@@ -2,7 +2,6 @@
 
 namespace App\Modules\User;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
     ];
 
@@ -36,12 +35,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Find the user instance for the given username.
      *
-     * @var array<string, string>
+     * @param  string  $username
+     * @return \App\Models\User
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-    // Rest omitted for brevity
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)->first();
+    }
 }

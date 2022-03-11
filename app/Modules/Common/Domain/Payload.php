@@ -28,6 +28,8 @@ class Payload
     const STATUS_UPDATED = 'UPDATED';
     /** User input was valid. */
     const STATUS_VALID = 'VALID';
+    /** Activated Event. */
+    const STATUS_ACTIVATED = 'ACTIVATED';
 
     public function __construct(string $status, array $result = [])
     {

@@ -9,6 +9,6 @@ use App\Modules\Base\BaseDto;
  */
 class AuthDto extends BaseDto
 {
-    protected $email;
+    protected $username;
     protected $password;
 }

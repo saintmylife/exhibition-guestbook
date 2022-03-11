@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Modules\User\Repository\UserRepositoryInterface;
 use Illuminate\Database\Seeder;
-use App\Modules\User\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,12 +12,22 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(UserRepositoryInterface $repo)
     {
-        User::create([
-            'email' => 'admin@admin.com',
+        $repo->create([
+            'username' => 'admin',
             'name' => 'Mr. Admin',
-            'password' => bcrypt('secret'),
-        ])->markEmailAsVerified();
+            'password' => bcrypt('digital0207'),
+        ]);
+        $repo->create([
+            'username' => 'organizer',
+            'name' => 'Mr. Organizer',
+            'password' => bcrypt('organizer1234'),
+        ]);
+        $repo->create([
+            'username' => 'operator',
+            'name' => 'Mr. Operator',
+            'password' => bcrypt('operator4321'),
+        ]);
     }
 }

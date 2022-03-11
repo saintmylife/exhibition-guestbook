@@ -36,7 +36,7 @@ class AuthLogin extends BaseService
             $auth = Http::asForm()->post(
                 $this->oAuthUrl(),
                 $this->oAuthFormData('password', [
-                    'username' => $authDto->email,
+                    'username' => $authDto->username,
                     'password' =>  $authDto->password,
                 ])
             )->throw()->json();

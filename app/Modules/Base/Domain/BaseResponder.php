@@ -47,7 +47,7 @@ abstract class BaseResponder
         $this->response = response()->json([
             'status'    => true,
             'messages'  => 'Update succesfully !!',
-            'data'      => $this->payload->getResult()['data']
+            'data'      => $this->payload->getResult()['update']
         ]);
     }
 
